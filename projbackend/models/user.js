@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
 const crypto = require("crypto");
 const uuidv1 = require("uuid/v1");
 
@@ -7,14 +7,14 @@ var userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      // required: true,
       maxlength: 40,
       trim: true,
     },
 
     lastName: {
       type: String,
-      required: true,
+      // required: true,
       maxlength: 40,
       trim: true,
     },

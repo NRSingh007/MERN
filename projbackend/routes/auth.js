@@ -4,7 +4,7 @@ var { check, body, validationResult } = require("express-validator");
 
 const { login, isSignedIn } = require("../controllers/auth");
 const { signout, signup } = require("../controllers/auth"); // importing the "signout" from the controller
-const User = require("../models/user");
+// const User = require("../models/user");
 
 router.post(
   "/login",
