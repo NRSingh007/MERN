@@ -186,6 +186,7 @@ exports.updateStock = (req, res, next) => {
         error: "Bulk operation failed",
       });
     }
+    res.json(products);
   });
   next();
 };
