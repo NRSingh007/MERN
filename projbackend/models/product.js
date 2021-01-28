@@ -40,12 +40,13 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     
-    image: {
+    photo: {
       data: Buffer,              // images are stored in data which is buffer
       contentType: String,
     },
     
     rating: {
+      default: 2.4,
       type: Number,
     },
   },

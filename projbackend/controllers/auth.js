@@ -1,9 +1,10 @@
 require("dotenv").config();
+
 const User = require("../models/user"); // recommended that the variable name use is similar to that of exports model
 const { check, body, validationResult } = require("express-validator");
 var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
-
+// const { getUserById } = require("./user");
 
 exports.signup = (req, res) => {
   // creating error or populating error
@@ -78,8 +79,11 @@ exports.login = (req, res) => {
     res.cookie("token", token, { expire: new Date() + 9999 });
 
     // send res to FrontEnd
-    const { _id, name, email, role } = user;
-    return res.json({ token, user: { _id, name, email, role } });
+    const { _id, firstName, lastName, userName, email, role } = user;
+    return res.json({
+      token,
+      user: { _id, firstName, lastName, userName, email, role },
+    });
   });
 };
 
@@ -92,19 +96,6 @@ exports.signout = (req, res) => {
   return res.status(200).redirect("/login");
 };
 
-// Set user info from request
-exports.setUserInfo = function setUserInfo(request) {
-  const getUserInfo = {
-    _id: request._id,
-    firstName: request.profile.firstName,
-    lastName: request.profile.lastName,
-    email: request.email,
-    role: request.role
-  };
-
-  return getUserInfo;
-};
-
 // protected routes
 exports.isSignedIn = expressJwt({
   secret: process.env.SECRET,
@@ -113,8 +104,9 @@ exports.isSignedIn = expressJwt({
 
 // custom middlewares
 exports.isAuthenticated = (req, res, next) => {
-  let checker = req.profile && req.auth && req.profile._id == req.auth._id;  // the property "profile" is set from the frontend and is only going to be set if the user is logged in
+  let checker = req.profile && req.auth && req.profile._id == req.auth._id; // the property "profile" is set from the frontend and is only going to be set if the user is logged in
   // console.log("auth", req.auth);
+  // console.log("profile", req.profile);
 
   if (!checker) {
     return res.status(403).json({
